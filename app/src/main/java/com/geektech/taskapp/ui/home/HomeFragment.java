@@ -39,8 +39,6 @@ public class HomeFragment extends Fragment {
     private List<Task> list;
     AlertDialog.Builder ad;
 
-    LottieAnimationView lav;
-
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_home, container, false);

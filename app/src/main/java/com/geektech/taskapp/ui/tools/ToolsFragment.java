@@ -31,26 +31,7 @@ public class ToolsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
 
         thumb_down = root.findViewById(R.id.lav_thumbDown);
-        thumb_down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                thumb_down.setProgress(0);
-                thumb_down.pauseAnimation();
-                thumb_down.playAnimation();
-                Toast.makeText(getContext(), "Boo!!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         thumb_down.playAnimation();
-      //  thumb_down.setVisibility(View.GONE);
-        thumb_down.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                animation.getCurrentPlayTime();
-            }
-        });
-      //  thumb_down.setVisibility(View.INVISIBLE);
-
         return root;
     }
 }

@@ -10,10 +10,11 @@
 
 
     <EditText
+
         android:id="@+id/editTitle"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Введите задачу"
         android:textStyle="bold" />
 
@@ -21,7 +22,7 @@
         android:id="@+id/description"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:gravity="top|start"
         android:hint="Введите описание"
         android:textStyle="italic" />

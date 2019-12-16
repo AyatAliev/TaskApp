@@ -7,6 +7,11 @@
     android:padding="16dp">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fs_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
     <Button
         android:id="@+id/btnDownload"
         android:layout_width="match_parent"
