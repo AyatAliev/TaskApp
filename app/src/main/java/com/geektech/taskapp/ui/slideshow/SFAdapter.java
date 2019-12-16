@@ -46,7 +46,7 @@ class ViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(ImageView imageView){
-
+        imageView.setImageDrawable(imageView.getDrawable());
     }
 
 
