@@ -1,6 +1,7 @@
 package com.geektech.taskapp;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class Task implements Serializable {
     private String title;
     private String desc;
 
+    @Ignore
     public Task() {
 
     }

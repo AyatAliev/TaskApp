@@ -28,6 +28,7 @@ import com.geektech.taskapp.FormActivity;
 import com.geektech.taskapp.OnItemClickListener;
 import com.geektech.taskapp.R;
 import com.geektech.taskapp.Task;
+import com.geektech.taskapp.ui.tools.ToolsFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +49,9 @@ public class HomeFragment extends Fragment {
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+
+
 
 
         list = new ArrayList<>();
@@ -120,7 +124,6 @@ public class HomeFragment extends Fragment {
         list.addAll(App.getDatabase().taskDao().sort());
         adapter.notifyDataSetChanged();
     }
-
 
 }
 

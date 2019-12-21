@@ -1,6 +1,7 @@
 package com.geektech.taskapp.ui.tools;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ public class ToolsFragment extends Fragment {
 
         thumb_down = root.findViewById(R.id.lav_thumbDown);
         thumb_down.playAnimation();
+
         return root;
     }
+
 }

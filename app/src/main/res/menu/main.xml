@@ -8,6 +8,11 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/singOut"
+        android:title="Sing_Out"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

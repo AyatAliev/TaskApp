@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_height="match_parent"
+    tools:context=".PhoneActivity">
+
+    <EditText
+        android:id="@+id/PAeditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        />
+
+    <EditText
+        android:id="@+id/smsCode"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:inputType="phone"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/onSmsClick"
+        android:layout_below="@id/smsCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button"
+        android:text="Продолжить"
+        android:visibility="gone"
+        android:onClick="onCodeClic"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PAeditText"
+        android:background="@drawable/bg_button"
+        android:text="Продолжить"
+        android:onClick="onClick"
+        />
+
+
+
+</RelativeLayout>

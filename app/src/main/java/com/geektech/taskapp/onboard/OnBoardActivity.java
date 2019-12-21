@@ -14,8 +14,11 @@ import android.widget.Button;
 
 import com.geektech.taskapp.FormActivity;
 import com.geektech.taskapp.MainActivity;
+import com.geektech.taskapp.PhoneActivity;
 import com.geektech.taskapp.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
 
 public class OnBoardActivity extends AppCompatActivity {
 
@@ -43,7 +46,10 @@ public class OnBoardActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+
 
     public class SectionPagerAdapter extends FragmentPagerAdapter {
 
