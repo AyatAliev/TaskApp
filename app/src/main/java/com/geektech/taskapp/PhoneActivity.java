@@ -3,10 +3,15 @@ package com.geektech.taskapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +28,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class PhoneActivity extends AppCompatActivity {
 
 
@@ -31,8 +38,10 @@ public class PhoneActivity extends AppCompatActivity {
     private String id;
     private Button onSms;
     private boolean isCodeSend;
+    String phoneNumber;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks verifyPhoneNumber;
 
+    @SuppressLint({"MissingPermission", "HardwareIds"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +50,17 @@ public class PhoneActivity extends AppCompatActivity {
         sms = findViewById(R.id.smsCode);
         onSms = findViewById(R.id.onSmsClick);
         editNumber = findViewById(R.id.PAeditText);
+
+  /*      if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_NUMBERS)) {
+            TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+            assert telephonyManager != null;
+             editNumber.setText(telephonyManager.getLine1Number());
+        } else {
+            EasyPermissions.requestPermissions(this, "Разрешить?", 101,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }*/
+    //    editNumber.setText(phoneNumber);
+//        Log.d("ololo", phoneNumber);
         verifyPhoneNumber = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {

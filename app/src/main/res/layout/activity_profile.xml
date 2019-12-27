@@ -13,6 +13,7 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:onClick="onClickImage"
         app:srcCompat="@drawable/ic_person_black_24dp"
         />
 
@@ -37,6 +38,13 @@
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="Save"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="invisible"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         />
 
 </LinearLayout>

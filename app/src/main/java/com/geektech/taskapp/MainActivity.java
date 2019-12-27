@@ -6,11 +6,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.geektech.taskapp.onboard.OnBoardActivity;
 import com.geektech.taskapp.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.util.Log;
@@ -18,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -27,6 +33,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -35,6 +47,7 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -46,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView editEmail;
     private String name;
     private String email;
-
+    private String userId;
+    private String avatars;
+    private ImageView imageViewHader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         boolean isShown = preferences.getBoolean("isShown", false);
         name = preferences.getString("name", " ");
         email = preferences.getString("email"," ");
+    //    avatars = preferences.getString("uri", " ");
+        userId = FirebaseAuth.getInstance().getUid();
+
+        //    getinfo();
+
+
 
         if (!isShown) {
             startActivity(new Intent(this, OnBoardActivity.class));
@@ -72,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
+        getinfo2();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -96,11 +117,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imageViewHader = header.findViewById(R.id.imageViewhader);
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
+
+        storage.child("avatars/" + userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MainActivity.this).load(uri).circleCrop().into(imageViewHader);
+            }
+        });
+
         editName = header.findViewById(R.id.editHeaderName);
         editEmail = header.findViewById(R.id.editHeaderEmail);
         editName.setText(name);
         editEmail.setText(email);
 
+  /*      imageView = header.findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
@@ -157,6 +195,24 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getinfo2() {
+        FirebaseFirestore.getInstance().collection("users").document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (documentSnapshot != null) {
+                            String name = documentSnapshot.getString("name");
+                            String email = documentSnapshot.getString("email");
+                            String image = documentSnapshot.getString("uri");
+                            editName.setText(name);
+                            editEmail.setText(email);
+                  //          imageViewHader.setImageURI(Uri.parse(image));
+
+                        }
+                    }
+                });
     }
 
 }
