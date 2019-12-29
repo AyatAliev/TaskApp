@@ -106,12 +106,11 @@ public class ProfileActivity extends AppCompatActivity {
         if (imageUri != null) {
             uploadImage(null);
         } else {
-            save(String.valueOf(muri));
+            save(null);
         }
     }
 
     private void uploadImage(final Uri uri) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
         String userId = FirebaseAuth.getInstance().getUid();
 //        editor.putString("uri", String.valueOf(uri));
   //      editor.apply();
@@ -187,7 +186,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 100) {
             imageUri = data.getData();
             uploadImage(data.getData());
-            muri = data.getData();
             Glide.with(this).load(data.getData()).circleCrop().into(imageView);
 
         }

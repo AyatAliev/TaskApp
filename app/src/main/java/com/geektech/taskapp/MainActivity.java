@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView editEmail;
     private String name;
     private String email;
+    private View header;
     private String userId;
     private String avatars;
     private ImageView imageViewHader;
@@ -67,14 +68,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        boolean isShown = preferences.getBoolean("isShown", false);
-        name = preferences.getString("name", " ");
-        email = preferences.getString("email"," ");
-    //    avatars = preferences.getString("uri", " ");
+        boolean isShown = Prefs.getInstance().getIsShow();
+        name = Prefs.getInstance().getPreferences().getString("name", " ");
+        email = Prefs.getInstance().getPreferences().getString("email", " ");
+   //     avatars = Prefs.getInstance().getPreferences().getString("url", " ");
+        //    avatars = preferences.getString("uri", " ");
         userId = FirebaseAuth.getInstance().getUid();
-
-        //    getinfo();
 
 
 
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
+         header = navigationView.getHeaderView(0);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
         imageViewHader = header.findViewById(R.id.imageViewhader);
         StorageReference storage = FirebaseStorage.getInstance().getReference();
-
         storage.child("avatars/" + userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -130,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         editName = header.findViewById(R.id.editHeaderName);
         editEmail = header.findViewById(R.id.editHeaderEmail);
         editName.setText(name);
+      //  imageViewHader.setImageURI(Uri.parse(avatars));
         editEmail.setText(email);
 
   /*      imageView = header.findViewById(R.id.imageView);
@@ -175,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.singOut:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Внимание!!");
-                builder.setMessage("Вы точно зотите выйти с аккаунта?");
+                builder.setTitle("Внимание!!!");
+                builder.setMessage("Вы точно хотите выйти с аккаунта?");
                 builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -205,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
                         if (documentSnapshot != null) {
                             String name = documentSnapshot.getString("name");
                             String email = documentSnapshot.getString("email");
-                            String image = documentSnapshot.getString("uri");
+                            String image = documentSnapshot.getString("avatar");
+                            Glide.with(MainActivity.this).load(image).circleCrop().into(imageViewHader);
+                            imageViewHader.setImageURI(Uri.parse(image));
                             editName.setText(name);
                             editEmail.setText(email);
-                  //          imageViewHader.setImageURI(Uri.parse(image));
-
                         }
                     }
                 });

@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +41,6 @@ public class PhoneActivity extends AppCompatActivity {
     private String id;
     private Button onSms;
     private boolean isCodeSend;
-    String phoneNumber;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks verifyPhoneNumber;
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
@@ -101,11 +103,32 @@ public class PhoneActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                   /*         startActivity(new Intent(PhoneActivity.this, MainActivity.class));
+                            Toaster.show("Успешно");
+                            finish();*/
+                   getInfo();
+                        } else {
+                            Toaster.show("Ошибка");
+                        }
+                    }
+                });
+    }
+
+    private void getInfo() {
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String name = task.getResult().getString("name");
+                            String email = task.getResult().getString("email");
+                            Prefs.getInstance().saveUserInfo(name,email);
                             startActivity(new Intent(PhoneActivity.this, MainActivity.class));
                             Toaster.show("Успешно");
                             finish();
-                        } else {
-                            Toaster.show("Ошибка");
                         }
                     }
                 });

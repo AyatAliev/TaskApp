@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geektech.taskapp.MainActivity;
+import com.geektech.taskapp.Prefs;
 import com.geektech.taskapp.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -64,8 +65,7 @@ public class BoardFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SharedPreferences preferences = getActivity().getSharedPreferences("settings", MODE_PRIVATE);
-                        preferences.edit().putBoolean("isShown", true).apply();
+                        Prefs.getInstance().saveisShow();
                         startActivity(new Intent(getContext(), MainActivity.class));
                         getActivity().finish();
                     }

@@ -20,6 +20,7 @@ public class App extends Application {
                 .allowMainThreadQueries()
                 .build();
         instance = this;
+        new Prefs();
     }
 
     public static App getInstance(){

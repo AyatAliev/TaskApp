@@ -6,16 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/snow"
-        app:lottie_fileName="snow.json"
-        app:lottie_autoPlay="true"
-        android:padding="20dp"
-        android:elevation="5000dp"
-        android:scaleType="center"
-        app:lottie_loop="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
